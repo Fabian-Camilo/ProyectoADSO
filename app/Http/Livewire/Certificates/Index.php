@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Certificates;
 
 use Livewire\Component;
 use App\Models\Certificate;
-use App\Models\Company;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Livewire\WithPagination;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
-class Certificates extends Component
+class Index extends Component
 {
     use WithPagination;
     use AuthorizesRequests;
@@ -27,9 +29,11 @@ class Certificates extends Component
     );
     public $certificate;
     public $elements = [];
-    public $created_by, $code, $valid_since = NULL, $valid_until= NULL, $search, $certificate_id, $perPage = 5;
+    public $created_by, $code, $valid_since = NULL, $valid_until = NULL, $search, $certificate_id, $perPage = 5;
     public $code_in_use = false;
     public $company;
+    public $qr_image;
+    public $url_certificate;
     public function mount()
     {
         $this->company = Auth::user()->company;
@@ -66,7 +70,8 @@ class Certificates extends Component
             "value"  => NULL
         ];
     }
-    public function deleteElement($element){
+    public function deleteElement($element)
+    {
         try {
             unset($this->elements[$element]);
         } catch (\Throwable $th) {
@@ -78,10 +83,12 @@ class Certificates extends Component
     {
         $this->authorize('create certificates');
         $this->validate([
-            'code' => ['required',
+            'code' => [
+                'required',
                 Rule::unique('certificates')->ignore($this->certificate_id, 'id')->where(function ($query) {
-                return $query->where('company_id', $this->company->id);
-            })],
+                    return $query->where('company_id', $this->company->id);
+                })
+            ],
             'elements' => 'nullable',
             'valid_since' => 'nullable',
             'valid_until' => 'nullable',
@@ -89,16 +96,22 @@ class Certificates extends Component
             'code.unique' => 'El código ya está en uso',
             'code.required' => 'El código es obligatorio',
         ]);
+        //validar fecha desde y hasta cuando actualiza
+        if (!$this->valid_until) $this->valid_until = null;
+        if (!$this->valid_since) $this->valid_since = null;
         $certificate = Certificate::updateOrCreate(['id' => $this->certificate_id], [
             'code' => $this->code,
             'company_id' => $this->company->id,
             'created_by' => Auth::user()->name,
+
             'valid_since' => $this->valid_since,
             'valid_until' => $this->valid_until,
             'elements' => json_encode($this->elements)
         ]);
-        session()->flash('message',
-             $this->certificate_id ? 'Certificado actualizado correctamente.' : 'Certificado registrado correctamente.');
+        session()->flash(
+            'message',
+            $this->certificate_id ? 'Certificado actualizado correctamente.' : 'Certificado registrado correctamente.'
+        );
 
         $this->closeModal();
         $this->resetInputFields();
@@ -109,7 +122,17 @@ class Certificates extends Component
     {
         $this->authorize('view certificates');
         $this->certificate = Certificate::findOrFail($id);
+        //http://onlinevalidator.test/certificate?name=A-Team+SAS&code=qwe123
+        $this->url_certificate = route('viewCertificate') . "?name="
+            . urlencode($this->certificate->company->name) . "&code=" . urlencode($this->certificate->code);
         $this->isOpenQrModal = true;
+        $this->qr_image = "data:image/png;base64,".
+            base64_encode(QrCode::format('png')
+            ->size(1000)
+            ->mergeString(Storage::get('public/' . Auth::user()->company->icon_photo_path), 0.3)
+            ->errorCorrection('H')
+            ->margin(2)
+            ->generate(url($this->url_certificate)));
     }
     public function edit($id)
     {
@@ -118,11 +141,11 @@ class Certificates extends Component
         $this->certificate_id = $id;
         $this->code = $certificate->code;
         $this->created_by = $certificate->created_by;
-        $this->valid_since = date('Y-m-d', strtotime($certificate->valid_since));
-        $this->valid_until = date('Y-m-d', strtotime($certificate->valid_until));
+        if($certificate->valid_since) $this->valid_since = date('Y-m-d', strtotime($certificate->valid_since));
+        if($certificate->valid_until) $this->valid_until = date('Y-m-d', strtotime($certificate->valid_until));
         if ($certificate->elements) {
             foreach (json_decode($certificate->elements) as $item) {
-                array_push($this->elements, json_decode(json_encode($item),true));
+                array_push($this->elements, json_decode(json_encode($item), true));
             }
         }
         $this->openModal();

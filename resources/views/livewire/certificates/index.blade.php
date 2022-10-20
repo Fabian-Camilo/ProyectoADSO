@@ -26,16 +26,16 @@
                 @include('livewire.certificates.qrview')
             @endif
             @can('create certificates')
-            <div class="flex items-center justify-between px-4 py-3 bg-whiteborder-gray-200 sm:px-6">
-                <button type="button" wire:click='openModal()'
-                    class="inline-flex justify-center w-full px-4 py-2 m-4 text-base font-medium text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:w-auto sm:text-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                            clip-rule="evenodd" />
-                    </svg>Nuevo Certificado
-                </button>
-            </div>
+                <div class="flex items-center justify-between px-4 py-3 bg-whiteborder-gray-200 sm:px-6">
+                    <button type="button" wire:click='openModal()'
+                        class="inline-flex justify-center w-full px-4 py-2 m-4 text-base font-medium text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:w-auto sm:text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                clip-rule="evenodd" />
+                        </svg>Nuevo Certificado
+                    </button>
+                </div>
             @endcan
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -52,7 +52,7 @@
                         </select>
                         <button wire:click='clear' class="block m-1 rounded-md shadow-sm form-input">X</button>
 
-                        <button wire:click='download' type="button" @if (!$certificates->count()) disabled @endif
+                        {{-- <button wire:click='download' type="button" @if (!$certificates->count()) disabled @endif
                             class="flex px-4 py-2 mx-5 text-white transition-transform transform bg-green-800 rounded-md shadow-lg outline-none form-input focus:ring-4 active:scale-x-75">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
@@ -60,7 +60,7 @@
                                     d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
                             <span class="ml-2">Excel</span>
-                        </button>
+                        </button> --}}
 
                     </div>
                     @if ($certificates->count())
@@ -103,18 +103,26 @@
                                                     <strong>{{ $certificate->code }}</strong>
                                                 </td>
                                                 <td class="px-3 py-3 text-sm font-medium text-center whitespace-nowrap">
-                                                    <div class="text-sm font-medium text-gray-900">
-                                                        @if ($certificate->valid_since)
+                                                    @if ($certificate->valid_since)
+                                                        <div class="text-sm font-medium text-gray-900">
                                                             {{ date_format(date_create($certificate->valid_since), 'd-m-Y') }}
-                                                        @endif
-                                                    </div>
+                                                        </div>
+                                                    @else
+                                                        <div class="text-sm font-medium text-gray-500">
+                                                            N/A
+                                                        </div>
+                                                    @endif
                                                 </td>
                                                 <td class="px-3 py-3 text-sm font-medium text-center whitespace-nowrap">
-                                                    <div class="text-sm font-medium text-gray-900">
-                                                        @if ($certificate->valid_until)
+                                                    @if ($certificate->valid_until)
+                                                        <div class="text-sm font-medium text-gray-900">
                                                             {{ date_format(date_create($certificate->valid_until), 'd-m-Y') }}
-                                                        @endif
-                                                    </div>
+                                                        </div>
+                                                    @else
+                                                        <div class="text-sm font-medium text-gray-500">
+                                                            N/A
+                                                        </div>
+                                                    @endif
                                                 </td>
                                                 <td class="px-3 py-3 text-sm font-medium text-center whitespace-nowrap">
                                                     <div class="text-sm font-medium text-gray-900">
@@ -129,7 +137,8 @@
                                                 <td class="px-3 py-3 text-sm font-medium text-center whitespace-nowrap">
                                                     @can('view certificates')
                                                         <button type="button" wire:click='view_qr({{ $certificate->id }})'
-                                                            class="px-2 py-3 text-green-600 hover:text-green-900">Ver QR</button>
+                                                            class="px-2 py-3 text-green-600 hover:text-green-900">Generar
+                                                            QR</button>
                                                     @endcan
                                                     @can('update certificates')
                                                         <button type="button" wire:click='edit({{ $certificate->id }})'

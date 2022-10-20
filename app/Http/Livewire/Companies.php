@@ -12,7 +12,7 @@ class Companies extends Component
     use WithPagination;
 
     protected $queryString = ['search' => ['except' => ''],'perPage'];
-    public $name, $nit, $log_photo_path, $website, $email, $telephone , $search, $company_id;
+    public $name, $nit, $logo_photo_path, $icon_photo_path, $website, $email, $telephone , $search, $company_id;
     public $isOpen = 0, $isOpenDeleteCompany = 0;
     public $perPage=5;
 

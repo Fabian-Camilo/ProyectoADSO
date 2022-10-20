@@ -18,6 +18,7 @@ class CreateCompaniesTable extends Migration
             $table->string('name');
             $table->string('nit', 50)->nullable();
             $table->string('logo_photo_path', 2048)->nullable();
+            $table->string('icon_photo_path', 2048)->nullable();
             $table->string('website', 100)->nullable();
             $table->string('email', 100)->nullable();
             $table->string('telephone', 100)->nullable();

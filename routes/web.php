@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Plans;
 use App\Http\Livewire\Companies;
-use App\Http\Livewire\Certificates;
+use App\Http\Livewire\Certificates\Index;
 use App\Http\Livewire\Certificates\View;
 use App\Http\Livewire\QRCode;
 
@@ -30,15 +30,14 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/subscriptions',  function
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/plans', Plans::class)->name('plans');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/certificates', Certificates::class)->name('certificates');
+Route::middleware(['auth:sanctum', 'verified'])->get('/certificates', Index::class)->name('certificates');
 
-/*Route::get('/certificate/{company_name}/{certificate_code}', View::class)->name('viewCertificate');*/
 Route::get('/certificate', View::class)->name('viewCertificate');
 
-Route::get('/test', function () {
+/* Route::get('/test', function () {
     $texto = "Generando códigos QR con PHP desde parzibyte.me";
     $codigoQR = new QRCode();
     return QrCode::size(300)->backgroundColor(255,90,0)->generate('RemoteStack');
 });
 
-Route::get('/qrcode', QRCode::class);
+Route::get('/qrcode', QRCode::class); */

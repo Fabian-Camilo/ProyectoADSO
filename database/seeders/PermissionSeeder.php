@@ -17,7 +17,7 @@ class PermissionSeeder extends Seeder
     {
         $role_super_admin = Role::create(['name' => 'SuperAdmin']);
         $role_admin = Role::create(['name' => 'Admin']);
-        $role_assistant = Role::create(['name' => 'Assistant']);
+        $role_client = Role::create(['name' => 'Cliente']);
 
         $super_admin_permissions =
         [
@@ -63,11 +63,12 @@ class PermissionSeeder extends Seeder
             'update certificates',
             'delete certificates'
         ];
-        $assistant_permissions =
+        $client_permissions =
         [
             'view certificates',
             'create certificates',
-            'update certificates'
+            'update certificates',
+            'delete certificates'
         ];
 
         foreach ($super_admin_permissions as $key => $permission) {
@@ -76,8 +77,8 @@ class PermissionSeeder extends Seeder
         foreach ($admin_permissions as $key => $permission) {
             Permission::where('name' , $permission)->first()->assignRole($role_admin);
         }
-        foreach ($assistant_permissions as $key => $permission) {
-            Permission::where('name' , $permission)->first()->assignRole($role_assistant);
+        foreach ($client_permissions as $key => $permission) {
+            Permission::where('name' , $permission)->first()->assignRole($role_client);
         }
     }
 }

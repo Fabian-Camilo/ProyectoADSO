@@ -138,7 +138,6 @@
                                                 Agregar Campo
                                             </button>
                                         </div>
-                                        {{-- <pre class="m-0">{{var_dump($elements)}}</pre> --}}
                                         @if (count($elements))
                                             <table class="border-collapse min-w-full mx-1 divide-y divide-gray-200">
                                                 <thead class="bg-gray-50">

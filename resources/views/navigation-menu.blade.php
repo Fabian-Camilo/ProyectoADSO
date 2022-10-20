@@ -21,19 +21,21 @@
                         {{ __('Certificados') }}
                     </x-jet-nav-link>
                 </div>
-
+                @can('view plans')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('plans') }}" :active="request()->routeIs('plans')">
-                        {{ __('Nuestros Planes') }}
+                        {{ __('Planes') }}
                     </x-jet-nav-link>
                 </div>
+                @endcan
 
+                @can('view subscriptions')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('subscriptions') }}" :active="request()->routeIs('subscriptions')">
-                        {{ __('Mis Suscripciones') }}
+                        {{ __('Suscripciones') }}
                     </x-jet-nav-link>
                 </div>
-
+                @endcan
                 @can('view companies')
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('companies') }}" :active="request()->routeIs('companies')">

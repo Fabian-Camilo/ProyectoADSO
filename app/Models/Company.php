@@ -19,7 +19,8 @@ class Company extends Model
         'website',
         'email',
         'telephone',
-        'logo_photo_path'
+        'logo_photo_path',
+        'icon_photo_path'
 
     ];
 
