@@ -6,7 +6,7 @@
         <div class="bg-white rounded-3xl border shadow-xl p-8 w-100">
             <div class="flex justify-between items-center mb-4">
 
-                    <img class="h-20 w-auto"
+                    <img class="h-auto w-20"
                         src="{{ asset('storage/' . Auth::user()->company->logo_photo_path) }}"
                         alt="{{ Auth::user()->company->name }}">
                 <div>
