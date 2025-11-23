@@ -39,16 +39,21 @@ El proyecto es un **validador de certificados ambientales online con códigos QR
    git clone https://github.com/usuario/proyecto-certificados.git
    cd proyecto-certificados
 2. Instalar dependencias
+    ```bash
     composer install
     npm install
-3. Configurar el entorno:
+4. Configurar el entorno:
+    ```bash
     cp .env.example .env
     php artisan key:generate
-4. Ejecutar migraciones y seeders
+6. Ejecutar migraciones y seeders
+   ```bash
     php artisan migrate --seed
-5. Compilar frontend con Vite
+8. Compilar frontend con Vite
+   ```bash
     npm run build
-6. Iniciar servidor local
+10. Iniciar servidor local
+    ```bash
     php artisan serve
 
 ---
