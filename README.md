@@ -1,49 +1,62 @@
 #  Validador de Certificados Online con Códigos QR  
 _Evidencia: GA6-220501096-AA4-EV03 — Diseño Frontend que cumpla con los requerimientos del proyecto_
 
-Este proyecto corresponde al diseño, desarrollo e implementación del **frontend completo** para un sistema de validación de certificados online mediante **códigos QR**, creado como evidencia para el programa de formación.  
-El objetivo es proporcionar un frontend funcional, organizado y alineado a los requerimientos definidos por el instructor.
+Este repositorio contiene el **proyecto completo**, desarrollado como evidencia para el programa **ADSO – Ficha 3070306**.
+
+El proyecto es un **validador de certificados ambientales online con códigos QR**, desarrollado en **Laravel monolítico**, utilizando **Blade, Tailwind CSS, Livewire y Vite**, con base de datos **MySQL**.
 
 ---
 
 ##  Funcionalidad Principal
 
-- ✔️ Escaneo y lectura de códigos QR  
-- ✔️ Verificación de certificados en tiempo real  
-- ✔️ Interfaz clara y responsive  
-- ✔️ Visualización del estado del certificado  
-- ✔️ Integración con API backend para validar datos  
-- ✔️ Formularios organizados y validados  
-- ✔️ Diseño limpio, profesional y fácil de usar
-
----
-
-##  Requerimientos Cubiertos (según lineamientos del instructor)
-
-- **Estructura modular del frontend**
-- **HTML semántico**
-- **Uso correcto de CSS (o framework si aplica)**
-- **JS organizado por funciones**
-- **Componentes UI reutilizables**
-- **Diseño responsive**
-- **Mensajes claros para el usuario**
-- **Consumo adecuado de endpoints**
-- **Validación y manejo de errores**
-- **Buenas prácticas de accesibilidad**
-- **Buenas prácticas de nombrado**
+- Escaneo y lectura de códigos QR  
+- Validación de certificados en tiempo real directamente desde el frontend  
+- Visualización de resultados de certificados  
+- Interfaz clara, profesional y responsive  
+- Formularios con validaciones dinámicas mediante Livewire  
+- Componentes reutilizables y estructura modular en Blade  
 
 ---
 
 ##  Tecnologías Utilizadas
 
-- **HTML5**
-- **CSS3**
-- **JavaScript**
-- **Fetch API**
-- **QR Scanner (biblioteca usada)**
-- **Git / GitHub**
+| Componente | Herramienta |
+|-----------|-------------|
+| Framework | Laravel (MVC monolítico) |
+| Plantillas | Blade (HTML estructurado) |
+| Estilos | Tailwind CSS (compilado con Vite) |
+| Interactividad | Livewire |
+| Bundler | Vite |
+| Base de datos | MySQL (Eloquent ORM) |
+| Control de versiones | Git / GitHub |
 
 ---
 
-##  Estructura del Proyecto
+##  Instalación y Ejecución Local
+
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/usuario/proyecto-certificados.git
+   cd proyecto-certificados
+2. Instalar dependencias
+    composer install
+    npm install
+3. Configurar el entorno:
+    cp .env.example .env
+    php artisan key:generate
+4. Ejecutar migraciones y seeders
+    php artisan migrate --seed
+5. Compilar frontend con Vite
+    npm run build
+6. Iniciar servidor local
+    php artisan serve
+
+---
+
+## Ubicaciones importantes
+
+Vistas Blade (HTML): resources/views/
+CSS compilado: public/css(app.[hash].css
+JS compilado: public/js/app.js
+Estos archivos reflejan el frontend funcional y son equivalentes a HTML, CSS y JS puro para fines de la evidencia.
 
