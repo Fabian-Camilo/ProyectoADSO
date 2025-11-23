@@ -42,7 +42,18 @@ class ComposerScripts
     {
         require_once $event->getComposer()->getConfig()->get('vendor-dir').'/autoload.php';
 
-        static::clearCompiled();
+        try {
+            static::clearCompiled();
+        } catch (\Throwable $e) {
+            // Attempt to write a clear debug file at project root so Composer can show it
+            $message = "Composer postAutoloadDump exception: " . $e->getMessage() . PHP_EOL
+                . $e->getTraceAsString() . PHP_EOL;
+            @file_put_contents(getcwd() . DIRECTORY_SEPARATOR . 'composer_error.txt', $message, FILE_APPEND);
+            // Also echo so it may appear in some consoles
+            echo $message;
+            // Re-throw to preserve original behavior
+            throw $e;
+        }
     }
 
     /**

@@ -1,0 +1,17 @@
+Unclosed '(' on line 41 does not match '}'
+#0 C:\laragon\www\onlinevalidator\vendor\composer\ClassLoader.php(428): Composer\Autoload\includeFile('C:\\laragon\\www\\...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Exceptions\\...')
+#2 C:\laragon\www\onlinevalidator\vendor\laravel\framework\src\Illuminate\Container\Container.php(877): ReflectionClass->__construct('App\\Exceptions\\...')
+#3 C:\laragon\www\onlinevalidator\vendor\laravel\framework\src\Illuminate\Container\Container.php(758): Illuminate\Container\Container->build('App\\Exceptions\\...')
+#4 C:\laragon\www\onlinevalidator\vendor\laravel\framework\src\Illuminate\Foundation\Application.php(853): Illuminate\Container\Container->resolve('App\\Exceptions\\...', Array, false)
+#5 C:\laragon\www\onlinevalidator\vendor\laravel\framework\src\Illuminate\Container\Container.php(295): Illuminate\Foundation\Application->resolve('App\\Exceptions\\...', Array, false)
+#6 C:\laragon\www\onlinevalidator\vendor\laravel\framework\src\Illuminate\Container\Container.php(873): Illuminate\Container\Container->Illuminate\Container\{closure}(Object(Illuminate\Foundation\Application), Array)
+#7 C:\laragon\www\onlinevalidator\vendor\laravel\framework\src\Illuminate\Container\Container.php(758): Illuminate\Container\Container->build(Object(Closure))
+#8 C:\laragon\www\onlinevalidator\vendor\laravel\framework\src\Illuminate\Foundation\Application.php(853): Illuminate\Container\Container->resolve('Illuminate\\Cont...', Array, true)
+#9 C:\laragon\www\onlinevalidator\vendor\laravel\framework\src\Illuminate\Container\Container.php(694): Illuminate\Foundation\Application->resolve('Illuminate\\Cont...', Array)
+#10 C:\laragon\www\onlinevalidator\vendor\laravel\framework\src\Illuminate\Foundation\Application.php(838): Illuminate\Container\Container->make('Illuminate\\Cont...', Array)
+#11 C:\laragon\www\onlinevalidator\vendor\laravel\framework\src\Illuminate\Container\Container.php(1419): Illuminate\Foundation\Application->make('Illuminate\\Cont...')
+#12 C:\laragon\www\onlinevalidator\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php(366): Illuminate\Container\Container->offsetGet('Illuminate\\Cont...')
+#13 C:\laragon\www\onlinevalidator\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php(131): Illuminate\Foundation\Console\Kernel->reportException(Object(ParseError))
+#14 C:\laragon\www\onlinevalidator\artisan_debug.php(24): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#15 {main}

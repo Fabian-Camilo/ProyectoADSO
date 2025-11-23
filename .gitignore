@@ -2,3 +2,5 @@
 .env
 public/
 .env
+node_modules
+

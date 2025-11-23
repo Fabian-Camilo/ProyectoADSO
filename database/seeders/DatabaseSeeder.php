@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             'password'  => bcrypt('1234567890')
         ])->assignRole('SuperAdmin');
 
-        $sinamco = Company::create([
+        /*$sinamco = Company::create([
             'name'      => 'SINAMCO SAS',
             'email'     => 'contacto@sinamco.com.co',
             'nit'      => '901271844-1',
@@ -45,6 +45,6 @@ class DatabaseSeeder extends Seeder
             'name'      => 'Miguel Bermudez',
             'email'     => 'test@test.test',
             'password'  => bcrypt('1234567890')
-        ])->assignRole('Cliente');
+        ])->assignRole('Cliente');*/
     }
 }

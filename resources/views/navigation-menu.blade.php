@@ -31,7 +31,7 @@
 
                 @can('view subscriptions')
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('subscriptions') }}" :active="request()->routeIs('subscriptions')">
+                        <x-jet-nav-link href="#" :active="request()->routeIs('subscriptions')">
                             {{ __('Suscripciones') }}
                         </x-jet-nav-link>
                     </div>

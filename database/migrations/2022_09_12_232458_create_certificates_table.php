@@ -20,7 +20,7 @@ class CreateCertificatesTable extends Migration
             $table->string('code');
             $table->date('valid_since')->nullable();
             $table->date('valid_until')->nullable();
-            $table->json('elements')->nullable();
+            //$table->json('elements')->nullable();
             $table->timestamps();
         });
     }

@@ -34,10 +34,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/certificates', Index::cla
 
 Route::get('/certificate', View::class)->name('viewCertificate');
 
-/* Route::get('/test', function () {
+Route::get('/test', function () {
     $texto = "Generando códigos QR con PHP desde parzibyte.me";
     $codigoQR = new QRCode();
-    return QrCode::size(300)->backgroundColor(255,90,0)->generate('RemoteStack');
+    return QrCode::size(300)->backgroundColor(255, 90, 0)->generate('RemoteStack');
 });
 
-Route::get('/qrcode', QRCode::class); */
+Route::get('/qrcode', QRCode::class);

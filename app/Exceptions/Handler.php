@@ -37,10 +37,11 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
-        //solucion al problema de 419 redirect despues del login
-        $this->renderable(function (\Exception $e) {
-             if ($e->getPrevious() instanceof \Illuminate\Session\TokenMismatchException) {
-            return redirect()->route('login');
-        };
+        // solucion al problema de 419 redirect despues del login
+        $this->renderable(function (Throwable $e) {
+            if ($e->getPrevious() instanceof \Illuminate\Session\TokenMismatchException) {
+                return redirect()->route('login');
+            }
+        });
     }
 }

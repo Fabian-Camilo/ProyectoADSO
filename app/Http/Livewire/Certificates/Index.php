@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use App\Services\QrService;
 
 class Index extends Component
 {
@@ -126,13 +127,15 @@ class Index extends Component
         $this->url_certificate = route('viewCertificate') . "?name="
             . urlencode($this->certificate->company->name) . "&code=" . urlencode($this->certificate->code);
         $this->isOpenQrModal = true;
-        $this->qr_image = "data:image/png;base64,".
-            base64_encode(QrCode::format('png')
-            ->size(1000)
-            ->mergeString(Storage::get('public/' . Auth::user()->company->icon_photo_path), 0.3)
-            ->errorCorrection('H')
-            ->margin(2)
-            ->generate(url($this->url_certificate)));
+        $qrService = app(QrService::class);
+        $png = $qrService->generateQrWithLogo(
+            url($this->url_certificate),
+            Auth::user()->company->icon_photo_path,
+            1000,
+            0.3
+        );
+
+        $this->qr_image = "data:image/png;base64," . base64_encode($png);
     }
     public function edit($id)
     {
