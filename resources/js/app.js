@@ -1,7 +1,9 @@
-require('./bootstrap');
+function EventoClick() {
+    const mostrarMensaje = () => {
+        alert("Has hecho clic");
+    };
 
-import Alpine from 'alpinejs';
+    return <button onClick={mostrarMensaje}>Presionar</button>;
+}
 
-window.Alpine = Alpine;
-
-Alpine.start();
+export default EventoClick;

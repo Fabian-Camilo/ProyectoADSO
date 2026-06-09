@@ -41,3 +41,5 @@ Route::get('/test', function () {
 });
 
 Route::get('/qrcode', QRCode::class);
+
+

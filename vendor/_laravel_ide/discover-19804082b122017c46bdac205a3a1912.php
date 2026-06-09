@@ -71,7 +71,11 @@ if (!\Illuminate\Support\Facades\App::bound('auth')) {
         'policies' => (object) [],
     ]);
 } else {
-    collect(glob(base_path('**/Models/*.php')))->each(fn($file) => include_once($file));
+    if (\Illuminate\Support\Facades\File::isDirectory(base_path('app/Models'))) {
+        collect(\Illuminate\Support\Facades\File::allFiles(base_path('app/Models')))
+            ->filter(fn(\Symfony\Component\Finder\SplFileInfo $file) => $file->getExtension() === 'php')
+            ->each(fn($file) => include_once($file));
+    }
 
     $modelPolicies = collect(get_declared_classes())
         ->filter(fn($class) => is_subclass_of($class, \Illuminate\Database\Eloquent\Model::class))
@@ -79,6 +83,7 @@ if (!\Illuminate\Support\Facades\App::bound('auth')) {
             \Illuminate\Database\Eloquent\Relations\Pivot::class,
             \Illuminate\Foundation\Auth\User::class,
         ]))
+		->filter(fn($class) => (new \ReflectionClass($class))->isInstantiable())
         ->flatMap(fn($class) => [
             $class => \Illuminate\Support\Facades\Gate::getPolicyFor($class),
         ])
@@ -139,10 +144,12 @@ if (!\Illuminate\Support\Facades\App::bound('auth')) {
                                 if (get_class($closureThis) === \Illuminate\Auth\Access\Gate::class) {
                                     $vars = $reflection->getClosureUsedVariables();
 
-                                    if (isset($vars['callback'])) {
+                                    if (isset($vars['callback']) && str_contains($vars['callback'], '@')) {
                                         [$policyClass, $method] = explode('@', $vars['callback']);
 
-                                        $reflection = new \ReflectionMethod($policyClass, $method);
+                                        if (method_exists($policyClass, $method)) {
+                                            $reflection = new \ReflectionMethod($policyClass, $method);
+                                        }
                                     }
                                 }
                             }

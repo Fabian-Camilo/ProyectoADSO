@@ -108,7 +108,7 @@ $routes = new class {
             'name' => $route['name'],
             'action' => null,
             'parameters' => [],
-            'filename' => $path,
+            'filename' => LaravelVsCode::relativePath($path),
             'line' => 0,
         ];
     }
@@ -129,9 +129,19 @@ $routes = new class {
             'name' => $route->getName(),
             'action' => $route->getActionName(),
             'parameters' => $route->parameterNames(),
-            'filename' => $reflection ? $reflection->getFileName() : null,
+            'filename' => $reflection ? LaravelVsCode::relativePath($reflection->getFileName()) : null,
             'line' => $reflection ? $reflection->getStartLine() : null,
+            'livewire' => $this->getLivewireView($route),
         ];
+    }
+
+    protected function getLivewireView(\Illuminate\Routing\Route $route): ?string
+    {
+        if ($route->getActionName() !== 'Livewire\Features\SupportRouting\LivewirePageController') {
+            return null;
+        }
+
+        return $route->defaults['_livewire_component'] ?? null;
     }
 
     protected function getRouteReflection(\Illuminate\Routing\Route $route)
